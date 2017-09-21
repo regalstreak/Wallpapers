@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 public class WallpaperStuff extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
