@@ -11,10 +11,13 @@ import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class WallpaperStuff extends AppCompatActivity {
 
     TextView copyright;
     TextView wallstufftitle;
+    protected static DataUrl sData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,7 @@ public class WallpaperStuff extends AppCompatActivity {
         setContentView(R.layout.activity_wallpaper_stuff);
         setCopyright();
         wallstufftitle = findViewById(R.id.wallstufftitle);
+        wallstufftitle.setText(sData.wallName);
     }
 
     private void setCopyright() {

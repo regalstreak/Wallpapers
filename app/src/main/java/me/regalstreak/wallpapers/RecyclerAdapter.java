@@ -18,7 +18,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private LayoutInflater inflater;
     List<DataUrl> data = Collections.emptyList();
     DataUrl current;
-    int currentPos = 0;
 
     public RecyclerAdapter(Context context, List<DataUrl> data) {
         this.context = context;

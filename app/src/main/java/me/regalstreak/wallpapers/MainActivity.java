@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                         new RecyclerItemClickListener(MainActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
+                                WallpaperStuff.sData = recyclerAdapter.data.get(position);
                                 Intent intent = new Intent(MainActivity.this, WallpaperStuff.class);
                                 startActivity(intent);
                             }
