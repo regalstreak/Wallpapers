@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#0288D1</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorTextView">#96FF4081</color>
+    <color name="colorDivider">#70607D8B</color>
+    <color name="colorText1">#3C3C3C</color>
+    <color name="colorText2">#747474</color>
 
     <color name="colorWhite">#FFFFFFFF</color>
 </resources>

@@ -1,7 +1,6 @@
 package me.regalstreak.wallpapers;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -116,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONArray jsonArray = new JSONArray(result);
 
                 // Extract data from json and store into ArrayList as class objects
-                for(int i=0; i<jsonArray.length();i++){
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonData = jsonArray.getJSONObject(i);
                     DataUrl dataUrl = new DataUrl();
                     dataUrl.wallIndex = jsonData.getInt("wall_index");
@@ -128,13 +127,14 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Pass all this to recyclerView
-                recyclerView = (RecyclerView)findViewById(R.id.wallpaperList);
+                recyclerView = findViewById(R.id.wallpaperList);
                 recyclerAdapter = new RecyclerAdapter(MainActivity.this, data);
                 recyclerView.setAdapter(recyclerAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 recyclerView.addOnItemTouchListener(
                         new RecyclerItemClickListener(MainActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
-                            @Override public void onItemClick(View view, int position) {
+                            @Override
+                            public void onItemClick(View view, int position) {
                                 Intent intent = new Intent(MainActivity.this, WallpaperStuff.class);
                                 startActivity(intent);
                             }
