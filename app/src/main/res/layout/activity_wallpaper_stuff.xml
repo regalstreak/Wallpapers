@@ -17,6 +17,7 @@
                 android:layout_height="255dp">
 
                 <ImageView
+                    android:id="@+id/wallstuffimage"
                     android:layout_width="match_parent"
                     android:layout_height="230dp"
                     android:scaleType="centerCrop"
@@ -48,6 +49,7 @@
                     android:textSize="20dp" />
 
                 <me.regalstreak.wallpapers.TextView
+                    android:id="@+id/wallstufflicense"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Something something licence ©"
@@ -141,6 +143,7 @@
                     android:orientation="vertical">
 
                     <me.regalstreak.wallpapers.TextView
+                        android:id="@+id/wallstuffsite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Testsite"
@@ -148,7 +151,7 @@
                         android:textSize="16dp" />
 
                     <me.regalstreak.wallpapers.TextView
-                        android:id="@+id/link"
+                        android:id="@+id/wallstufflink"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:autoLink="web"

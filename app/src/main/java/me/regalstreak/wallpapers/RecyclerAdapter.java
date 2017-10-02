@@ -41,6 +41,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         // Load images
         // TODO: 20/9/17 caching 
         // TODO: 20/9/17 Loading stuff remove mipmap
+        // TODO: 2/10/17 Loading percentage
         GlideApp.with(context).load(current.wallURL)
                 .error(R.mipmap.ic_launcher)
                 .centerCrop()
