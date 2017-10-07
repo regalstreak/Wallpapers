@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private class AsyncFetch extends AsyncTask<String, String, String> {
 
+        // TODO: 8/10/17 implement the 'newer' progressdialog alternative
         ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
         HttpURLConnection connection;
         URL url = null;

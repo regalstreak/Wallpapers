@@ -27,7 +27,6 @@
             android:layout_height="37dp"
             android:layout_alignBottom="@id/wallpaperThumb"
             android:background="@color/colorTextView"
-            android:text="Textview"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             android:textStyle="bold" />

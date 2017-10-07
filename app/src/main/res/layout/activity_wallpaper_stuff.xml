@@ -42,7 +42,6 @@
                     android:id="@+id/wallstufftitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Wall Title"
                     android:textColor="@color/colorText1"
                     android:textSize="20dp" />
 
@@ -50,7 +49,6 @@
                     android:id="@+id/wallstufflicense"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Something something licence ©"
                     android:textColor="@color/colorText2"
                     android:textSize="14dp" />
 
@@ -144,7 +142,6 @@
                         android:id="@+id/wallstuffsite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Testsite"
                         android:textColor="@color/colorText1"
                         android:textSize="16dp" />
 
@@ -152,8 +149,7 @@
                         android:id="@+id/wallstufflink"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:autoLink="web"
-                        android:text="https://test.website" />
+                        android:autoLink="web"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -174,8 +170,7 @@
                 <me.regalstreak.wallpapers.TextView
                     android:id="@+id/copyright"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/licence_text" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

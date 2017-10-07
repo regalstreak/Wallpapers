@@ -108,13 +108,11 @@ public class WallPreview extends AppCompatActivity {
 
 
         // Load images
-        // TODO: 2/10/17 caching
         // TODO: 2/10/17 Loading stuff remove mipmap
         // TODO: 2/10/17 Loading percentage
         GlideApp.with(this)
                 .load(sData.wallURL)
                 .error(R.mipmap.ic_launcher_round)
-                //.centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.mipmap.ic_launcher)
                 .into(fullimage);
