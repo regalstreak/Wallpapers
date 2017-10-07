@@ -19,9 +19,7 @@
                 <ImageView
                     android:id="@+id/wallstuffimage"
                     android:layout_width="match_parent"
-                    android:layout_height="230dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/wallexample" />
+                    android:layout_height="230dp"/>
 
                 <android.support.design.widget.FloatingActionButton
                     android:layout_width="wrap_content"

@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Wallpapers</string>
     <string name="licence_text">All the wallpapers shown in the app are either in public domain or under Creative Commons license for which proper attribution is given to the respective uploaders. No wallpaper is distributed with our app. If an image violates any copyright, please report it to us and we will remove it from our database. For more information, click here.</string>
+
+    <string name="title_activity_wall_preview">WallPreview</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

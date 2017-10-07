@@ -9,4 +9,6 @@
     <color name="colorText2">#747474</color>
 
     <color name="colorWhite">#FFFFFFFF</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>
