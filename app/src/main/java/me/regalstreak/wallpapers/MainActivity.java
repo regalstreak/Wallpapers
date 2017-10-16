@@ -1,7 +1,10 @@
 package me.regalstreak.wallpapers;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +39,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new AsyncFetch().execute();
+        checkInternet();
+    }
+
+    private void checkInternet(){
+        if (isNetworkAvailable(this)) {
+            new AsyncFetch().execute();
+        }else{
+            Toast.makeText(this, "Please enable WiFi or Mobile Data", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean isNetworkAvailable(Context context) {
+        int[] networkTypes = {ConnectivityManager.TYPE_MOBILE,
+                ConnectivityManager.TYPE_WIFI};
+        try {
+            ConnectivityManager connectivityManager =
+                    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            for (int networkType : networkTypes) {
+                NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                if (activeNetworkInfo != null &&
+                        activeNetworkInfo.getType() == networkType)
+                    return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
     }
 
     private class AsyncFetch extends AsyncTask<String, String, String> {
@@ -48,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
-
             progressDialog.setMessage("\tLoading...");
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -58,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             try {
-                // TODO: 20/9/17 no internet fix
                 url = new URL("https://api.myjson.com/bins/cxjuh");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -93,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     return (result.toString());
 
                 } else {
+                    Toast.makeText(MainActivity.this, "Cannot connect to server, please reopen app and try again.", Toast.LENGTH_SHORT).show();
                     return ("unsuccessful");
                 }
             } catch (IOException e2) {
@@ -105,9 +132,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            //this method will be running on UI thread
             progressDialog.dismiss();
             List<DataUrl> data = new ArrayList<>();
             progressDialog.dismiss();
