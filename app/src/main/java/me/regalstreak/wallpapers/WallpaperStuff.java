@@ -1,8 +1,10 @@
 package me.regalstreak.wallpapers;
 
 import android.app.DownloadManager;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -19,8 +21,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class WallpaperStuff extends AppCompatActivity {
 
@@ -35,6 +43,9 @@ public class WallpaperStuff extends AppCompatActivity {
     Button preview;
     String directory;
     String extension;
+    Button setwallpaper;
+    View apnaview;
+    String fileplace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +56,7 @@ public class WallpaperStuff extends AppCompatActivity {
         setData();
         downloadWall();
         setPreview();
+        setWallButton();
     }
 
     private void findStuff() {
@@ -56,6 +68,7 @@ public class WallpaperStuff extends AppCompatActivity {
         wallstufflicense = findViewById(R.id.wallstufflicense);
         download = findViewById(R.id.download);
         preview = findViewById(R.id.preview);
+        setwallpaper = findViewById(R.id.setwallpaper);
     }
 
     private void setData() {
@@ -72,7 +85,7 @@ public class WallpaperStuff extends AppCompatActivity {
         // Load images
         // TODO: 2/10/17 Loading stuff remove mipmap
         // TODO: 2/10/17 Loading percentage
-       GlideApp.with(this)
+        GlideApp.with(this)
                 .load(sData.wallURL)
                 .error(R.mipmap.ic_launcher_round)
                 .centerCrop()
@@ -110,12 +123,9 @@ public class WallpaperStuff extends AppCompatActivity {
 
         // TODO: 4/10/17 Ask for write on external storage permission
 
-        directory = "/Pictures/" + getResources().getString(R.string.app_name);
-        extension = sData.wallURL.substring(sData.wallURL.length() - 4);
+        directory = "/Pictures/" + getResources().getString(R.string.app_name) + "/";
+        fileplace = Environment.getExternalStorageDirectory() + directory + sData.wallName + ".png";
 
-        if (extension.equals("jpeg")) {
-            extension = ".jpeg";
-        }
 
         File direct = new File(Environment.getExternalStorageDirectory()
                 + directory);
@@ -124,67 +134,104 @@ public class WallpaperStuff extends AppCompatActivity {
             direct.mkdir();
         }
 
-        DownloadManager manager = (DownloadManager) this.getSystemService(Context.DOWNLOAD_SERVICE);
-        Uri downloadUri = Uri.parse(uRl);
-        DownloadManager.Request request = new DownloadManager.Request(downloadUri);
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
-                .setAllowedOverRoaming(true)
-                .setTitle(sData.wallName)
-                .setDescription("By " + sData.wallSite)
-                .setDestinationInExternalPublicDir(directory, sData.wallName + extension)
-                .allowScanningByMediaScanner();
+        GlideApp.with(this)
+                .asBitmap()
+                .load(sData.wallURL)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(final Bitmap resource, Transition<? super Bitmap> transition) {
+                        new AsyncTask<Void, Void, Long>() {
 
-        manager.enqueue(request);
+                            @Override
+                            protected Long doInBackground(Void... voids) {
+                                File file = new File(fileplace);
+                                long contentlength = resource.getByteCount();
+
+                                try {
+                                    OutputStream os = new FileOutputStream(file);
+                                    resource.compress(Bitmap.CompressFormat.PNG, 100, os);
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                                return contentlength;
+                            }
+
+                            @Override
+                            protected void onPostExecute(Long contentlength) {
+                                super.onPostExecute(contentlength);
+
+                                // Add downloaded wallie to completed downloads, show notif and all
+                                DownloadManager manager = (DownloadManager) getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);
+                                manager.addCompletedDownload(
+                                        sData.wallName,
+                                        "By" + sData.wallSite,
+                                        true,
+                                        "image/png",
+                                        fileplace,
+                                        contentlength,
+                                        true
+                                );
+
+                                // Show snackbar too
+                                Snackbar.make(apnaview, "Hello", Snackbar.LENGTH_LONG)
+                                        // TODO: 4/10/17 Change the below hacky code
+                                        .setAction("Open", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Intent intent = new Intent();
+                                                intent.setAction(Intent.ACTION_VIEW);
+                                                intent.setDataAndType(Uri.parse("file://" + Environment.getExternalStorageDirectory() + directory + "/" + sData.wallName + extension), "image/*");
+                                                startActivity(intent);
+                                            }
+                                        })
+                                        .show();
+                            }
+                        }.execute();
+                    }
+                });
     }
 
     protected void downloadWall() {
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DownloadImageTask(view).execute();
+                apnaview = view;
+                setDownload(sData.wallURL);
             }
         });
     }
 
-    private class DownloadImageTask extends AsyncTask<Void, Void, Void> {
 
-        // TODO: 2/10/17 Set listener for watching download and snackbar... instead of this asynctask
-        private View ourView;
-
-        public DownloadImageTask(View v) {
-            ourView = v;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            setDownload(sData.wallURL);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Snackbar.make(ourView, "Hello", Snackbar.LENGTH_LONG)
-                    // TODO: 4/10/17 Change the below hacky code
-                    .setAction("Open", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent();
-                            intent.setAction(Intent.ACTION_VIEW);
-                            intent.setDataAndType(Uri.parse("file://" + Environment.getExternalStorageDirectory() + directory + "/" + sData.wallName + extension), "image/*");
-                            startActivity(intent);
-                        }
-                    })
-                    .show();
-        }
-    }
-
-    private void setPreview(){
+    private void setPreview() {
         preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WallpaperStuff.this, WallPreview.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void setWallButton() {
+
+        setwallpaper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                GlideApp.with(getApplicationContext())
+                        .asBitmap()
+                        .load(sData.wallURL)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                try {
+                                    WallpaperManager.getInstance(getApplicationContext()).setBitmap(resource);
+                                    Snackbar.make(view, "Wallpaper Set", Snackbar.LENGTH_SHORT).show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
             }
         });
     }

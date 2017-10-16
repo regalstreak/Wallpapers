@@ -75,6 +75,8 @@ public class WallPreview extends AppCompatActivity {
             hide();
         }
     };
+
+    // TODO: 11/10/17 Zoom and all 
     private ImageView fullimage;
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
