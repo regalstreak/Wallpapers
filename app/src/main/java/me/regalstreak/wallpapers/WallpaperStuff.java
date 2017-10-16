@@ -1,16 +1,24 @@
 package me.regalstreak.wallpapers;
 
+import android.Manifest;
 import android.app.DownloadManager;
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -19,6 +27,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -46,6 +55,7 @@ public class WallpaperStuff extends AppCompatActivity {
     Button setwallpaper;
     View apnaview;
     String fileplace;
+    final int writeStorageRequest = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,8 +131,6 @@ public class WallpaperStuff extends AppCompatActivity {
 
     private void setDownload(String uRl) {
 
-        // TODO: 4/10/17 Ask for write on external storage permission
-
         directory = "/Pictures/" + getResources().getString(R.string.app_name) + "/";
         fileplace = Environment.getExternalStorageDirectory() + directory + sData.wallName + ".png";
 
@@ -191,14 +199,79 @@ public class WallpaperStuff extends AppCompatActivity {
                 });
     }
 
-    protected void downloadWall() {
+    private void downloadWall() {
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 apnaview = view;
-                setDownload(sData.wallURL);
+                if (isPermissionGranted()) {
+                    setDownload(sData.wallURL);
+                }
             }
         });
+    }
+
+    private boolean isPermissionGranted() {
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                // Explanation
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                    Toast.makeText(WallpaperStuff.this, "shouldShowRequestPermissionRationale run", Toast.LENGTH_LONG).show();
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(WallpaperStuff.this);
+                    builder.setMessage("TESTAETWET")
+                            .setTitle("Testtitle")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    ActivityCompat.requestPermissions(WallpaperStuff.this,
+                                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                            writeStorageRequest);
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                    return false;
+
+                } else {
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            writeStorageRequest);
+                    return false;
+                }
+            }
+        } else {
+            // Auto grant if pre-MM device
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case writeStorageRequest: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "GABE PERMISSION THANK", Toast.LENGTH_SHORT).show();
+                    setDownload(sData.wallURL);
+                } else {
+                    Toast.makeText(this, "DIDNT GIB PERM DIE NORMIE", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
     }
 
 
