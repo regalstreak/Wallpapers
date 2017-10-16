@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,9 +19,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -32,22 +37,16 @@ public class MainActivity extends AppCompatActivity {
     // Timeouts are in milliseconds
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
+
     private RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
+    private final String ourDataFilename = "/ourdata.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkInternet();
-    }
-
-    private void checkInternet(){
-        if (isNetworkAvailable(this)) {
-            new AsyncFetch().execute();
-        }else{
-            Toast.makeText(this, "Please enable WiFi or Mobile Data", Toast.LENGTH_SHORT).show();
-        }
+        new AsyncFetch().execute();
     }
 
     private boolean isNetworkAvailable(Context context) {
@@ -68,6 +67,41 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    private void writeJsonToFile(String data, Context context) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("ourdata.json", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+            Log.i("io", "Wrote file");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected String buffToString(Reader ourReader, boolean save) {
+        try {
+            BufferedReader reader = new BufferedReader(ourReader);
+            StringBuilder result = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+
+            // write it to ourdata.json
+            if (save) {
+                if (!result.toString().equals(null)) {
+                    writeJsonToFile(result.toString(), MainActivity.this);
+                }
+            }
+
+            return (result.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return e.toString();
+        }
+    }
+
     private class AsyncFetch extends AsyncTask<String, String, String> {
 
         // TODO: 8/10/17 implement the 'newer' progressdialog alternative
@@ -84,49 +118,58 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            try {
-                url = new URL("https://api.myjson.com/bins/cxjuh");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                return e.toString();
-            }
 
-            try {
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setReadTimeout(READ_TIMEOUT);
-                connection.setConnectTimeout(CONNECTION_TIMEOUT);
-                connection.setRequestMethod("GET");
-
-            } catch (IOException e1) {
-                e1.printStackTrace();
-                return e1.toString();
-            }
-
-            try {
-                int responseCode = connection.getResponseCode();
-
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-
-                    InputStream inputStream = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                    StringBuilder result = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        result.append(line);
-                    }
-                    // Pass to onPostExecute
-                    return (result.toString());
-
-                } else {
-                    Toast.makeText(MainActivity.this, "Cannot connect to server, please reopen app and try again.", Toast.LENGTH_SHORT).show();
-                    return ("unsuccessful");
+            if (isNetworkAvailable(MainActivity.this)) {
+                try {
+                    url = new URL("https://api.myjson.com/bins/11vt6x");
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    return e.toString();
                 }
-            } catch (IOException e2) {
-                e2.printStackTrace();
-                return e2.toString();
-            } finally {
-                connection.disconnect();
+
+                try {
+                    connection = (HttpURLConnection) url.openConnection();
+                    connection.setReadTimeout(READ_TIMEOUT);
+                    connection.setConnectTimeout(CONNECTION_TIMEOUT);
+                    connection.setRequestMethod("GET");
+
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                    return e1.toString();
+                }
+
+                try {
+                    int responseCode = connection.getResponseCode();
+
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                        InputStream inputStream = connection.getInputStream();
+                        return buffToString(new InputStreamReader(inputStream), true);
+
+                    } else {
+                        File ourData = new File(MainActivity.this.getFilesDir().getPath() + ourDataFilename);
+                        if(ourData.exists()){
+                            return buffToString(new FileReader(ourData), false);
+                        }else {
+                            Toast.makeText(MainActivity.this, "Cannot connect to server, please reopen app and try again.", Toast.LENGTH_SHORT).show();
+                            return ("unsuccessful");
+                        }
+                    }
+                } catch (IOException e2) {
+                    e2.printStackTrace();
+                    return e2.toString();
+                } finally {
+                    connection.disconnect();
+                }
+            } else {
+                File ourData = new File(MainActivity.this.getFilesDir().getPath() + ourDataFilename);
+                try {
+                    return buffToString(new FileReader(ourData), false);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return e.toString();
+                }
             }
         }
 
