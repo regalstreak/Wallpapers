@@ -41,6 +41,9 @@ import java.io.OutputStream;
 
 public class WallpaperStuff extends AppCompatActivity {
 
+    // TODO: 17/10/17 Implement share feature
+    // TODO: 17/10/17 setwall lockscreen, device wallpaper 
+    
     protected static DataUrl sData;
     TextView copyright;
     TextView wallstufftitle;

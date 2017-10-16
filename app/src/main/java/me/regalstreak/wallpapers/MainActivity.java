@@ -33,6 +33,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    
+    // TODO: 17/10/17 Splash screen
+    // TODO: 17/10/17 offline retry and all
+    // TODO: 17/10/17 Entire code cleanup, strings, colors and shit
+    // TODO: 17/10/17 ALL TESTING
 
     // Timeouts are in milliseconds
     public static final int CONNECTION_TIMEOUT = 10000;

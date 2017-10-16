@@ -6,6 +6,8 @@ import android.view.View;
 
 public class DisclaimerActivity extends AppCompatActivity {
 
+    // TODO: 17/10/17 License Cleanup
+
     Button email;
     TextView tptextview;
     int i;

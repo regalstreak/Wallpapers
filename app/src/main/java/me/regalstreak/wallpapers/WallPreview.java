@@ -20,6 +20,12 @@ import static me.regalstreak.wallpapers.WallpaperStuff.sData;
  * status bar and navigation/system bar) with user interaction.
  */
 public class WallPreview extends AppCompatActivity {
+
+    // TODO: 17/10/17 Zooming into imageview
+    // TODO: 17/10/17 button colors 
+    // TODO: 17/10/17 button function
+    // TODO: 17/10/17 setwall lockscreen, device wallpaper
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
