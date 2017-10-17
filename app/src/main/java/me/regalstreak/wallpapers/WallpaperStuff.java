@@ -2,7 +2,6 @@ package me.regalstreak.wallpapers;
 
 import android.Manifest;
 import android.app.DownloadManager;
-import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,7 +35,6 @@ import com.bumptech.glide.request.transition.Transition;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 
 public class WallpaperStuff extends AppCompatActivity {
@@ -57,6 +55,7 @@ public class WallpaperStuff extends AppCompatActivity {
     Button setwallpaper;
     View apnaview;
     String fileplace;
+    String fulldescPerm;
     final int writeStorageRequest = 0;
 
     @Override
@@ -89,9 +88,9 @@ public class WallpaperStuff extends AppCompatActivity {
         wallstufflink.setText(sData.wallSiteUrl);
 
         if (sData.wallSite.matches("Pinimg") || sData.wallSite.matches("Imgur")) {
-            wallstufflicense.setText("Public Domain");
+            wallstufflicense.setText(R.string.public_domain);
         } else {
-            wallstufflicense.setText("Creative Commons License ©");
+            wallstufflicense.setText(R.string.creative_commons);
         }
 
         // Load images
@@ -223,12 +222,16 @@ public class WallpaperStuff extends AppCompatActivity {
                 // Explanation
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 
-                    Toast.makeText(WallpaperStuff.this, "shouldShowRequestPermissionRationale run", Toast.LENGTH_LONG).show();
+                    fulldescPerm = getResources().getString(R.string.storage_explanation_1)
+                            + " "
+                            + getResources().getString(R.string.app_name)
+                            + " "
+                            + getResources().getString(R.string.storage_explanation_2);
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(WallpaperStuff.this);
-                    builder.setMessage("TESTAETWET")
-                            .setTitle("Testtitle")
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    builder.setMessage(fulldescPerm)
+                            .setTitle(R.string.storage_required_title)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     ActivityCompat.requestPermissions(WallpaperStuff.this,
@@ -236,7 +239,7 @@ public class WallpaperStuff extends AppCompatActivity {
                                             writeStorageRequest);
                                 }
                             })
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -266,10 +269,10 @@ public class WallpaperStuff extends AppCompatActivity {
             case writeStorageRequest: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "GABE PERMISSION THANK", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.received_permission, Toast.LENGTH_SHORT).show();
                     setDownload(sData.wallURL);
                 } else {
-                    Toast.makeText(this, "DIDNT GIB PERM DIE NORMIE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.no_permission, Toast.LENGTH_SHORT).show();
                 }
                 return;
             }

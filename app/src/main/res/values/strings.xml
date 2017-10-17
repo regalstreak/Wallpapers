@@ -8,6 +8,15 @@
 
 
     <!-- WallpaperStuff -->
+    <string name="public_domain">Public Domain"</string>
+    <string name="creative_commons">Creative Commons License ©</string>
+    <string name="storage_required_title">Storage permission required</string>
+    <string name="storage_explanation_1">The storage permission lets </string>
+    <string name="storage_explanation_2"> download the wallpaper you love to your internal storage for offline viewing!</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="no_permission">Couldn\'t receive storage permission</string>
+    <string name="received_permission">Received storage permission. Downloading wallpaper.</string>
     <string name="set_wallpaper">Set Wallpaper</string>
     <string-array name="set_wallpaper_options">
         <item>Home Screen</item>
