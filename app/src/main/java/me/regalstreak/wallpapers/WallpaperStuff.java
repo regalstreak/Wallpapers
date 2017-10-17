@@ -42,8 +42,7 @@ import java.io.OutputStream;
 public class WallpaperStuff extends AppCompatActivity {
 
     // TODO: 17/10/17 Implement share feature
-    // TODO: 17/10/17 setwall lockscreen, device wallpaper 
-    
+
     protected static DataUrl sData;
     TextView copyright;
     TextView wallstufftitle;
@@ -292,7 +291,7 @@ public class WallpaperStuff extends AppCompatActivity {
 
         setwallpaper.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View view) {
+            public void onClick(final View ourView) {
                 GlideApp.with(getApplicationContext())
                         .asBitmap()
                         .load(sData.wallURL)
@@ -300,12 +299,8 @@ public class WallpaperStuff extends AppCompatActivity {
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                try {
-                                    WallpaperManager.getInstance(getApplicationContext()).setBitmap(resource);
-                                    Snackbar.make(view, "Wallpaper Set", Snackbar.LENGTH_SHORT).show();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+                                WallSelectDialog wallSelectDialog = new WallSelectDialog(WallpaperStuff.this, resource, ourView);
+                                wallSelectDialog.show(getFragmentManager(), "wallselectdialog");
                             }
                         });
             }

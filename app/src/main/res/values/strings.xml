@@ -5,4 +5,16 @@
     <string name="title_activity_wall_preview">WallPreview</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+
+    <!-- WallpaperStuff -->
+    <string name="set_wallpaper">Set Wallpaper</string>
+    <string-array name="set_wallpaper_options">
+        <item>Home Screen</item>
+        <item>Lock Screen</item>
+        <item>Both</item>
+    </string-array>
+    <string name="lock_screen_set">Lockscreen wallpaper set!</string>
+    <string name="home_set">Homescreen wallpaper set!</string>
+    <string name="both_set">Home and lockscreen wallpaper set!</string>
 </resources>
