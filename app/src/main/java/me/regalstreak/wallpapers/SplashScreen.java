@@ -1,6 +1,5 @@
 package me.regalstreak.wallpapers;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -31,12 +30,11 @@ import java.util.List;
 
 public class SplashScreen extends AppCompatActivity {
 
-    // Timeouts are in milliseconds
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
-
     protected static List<DataUrl> data = new ArrayList<>();
-    private final String ourDataFilename = "/ourdata.json";
+    private final String ourDataFilenameNoSlash = "ourdata.json";
+    private final String ourDataFilename = "/" + ourDataFilenameNoSlash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +63,7 @@ public class SplashScreen extends AppCompatActivity {
 
     private void writeJsonToFile(String data, Context context) {
         try {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("ourdata.json", Context.MODE_PRIVATE));
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(ourDataFilenameNoSlash, Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
             Log.i("io", "Wrote file");
@@ -100,17 +98,8 @@ public class SplashScreen extends AppCompatActivity {
 
     private class AsyncFetch extends AsyncTask<String, String, String> {
 
-        // TODO: 8/10/17 implement the 'newer' progressdialog alternative
-        ProgressDialog progressDialog = new ProgressDialog(SplashScreen.this);
         HttpURLConnection connection;
         URL url = null;
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog.setMessage("\tLoading...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
 
         @Override
         protected String doInBackground(String... strings) {
@@ -171,10 +160,6 @@ public class SplashScreen extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            progressDialog.dismiss();
-
-            progressDialog.dismiss();
-
             try {
                 JSONArray jsonArray = new JSONArray(result);
 
