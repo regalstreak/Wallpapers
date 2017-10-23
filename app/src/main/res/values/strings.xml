@@ -2,6 +2,7 @@
 
     <!-- App Wide -->
     <string name="app_name">Wallpapers</string>
+    <string name="email_id">regalstreak@gmail.com</string>
 
     <!-- WallpaperStuff -->
     <string name="public_domain">Public Domain"</string>
@@ -32,4 +33,10 @@
     <string name="takedown">Request takedown</string>
     <string name="disc_text">All logos/images/names are copyrights of their respective owners. These images are not endorsed by any of the perspective owners and the images are used simply for aesthetic purposes. No copyright infringement is intended. Any request to remove one of the logos/images/names will be honoured. None of the images are hosted on the app. Each and every image is hotlinked from a source where hotlinking is allowed.</string>
     <string name="takedown_text">If you are a photographer or a digital artist and you want your photo/art/image to be taken down, press the button below to email the developers regarding it. The link to the image in the app will be removed from the app soon.</string>
+    <string name="email_client">Choose an email client</string>
+    <string name="email_subject">Image take down notice</string>
+    <string name="email_body_1">Here are images I request you to remove: \n\n</string>
+    <string name="email_body_2">I can provide the necessary proof of it being my work.</string>
+    <string name="enter_links">&lt;Enter links of the images to be reported here&gt;\n\n</string>
+
 </resources>
