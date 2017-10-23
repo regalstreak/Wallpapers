@@ -25,7 +25,7 @@ public class TextView extends android.support.v7.widget.AppCompatTextView {
         setFont();
     }
 
-    private void setFont(){
+    private void setFont() {
         Typeface font = Typeface.createFromAsset(getContext().getAssets(), "fonts/OpenSans-Regular.ttf");
         setTypeface(font, Typeface.NORMAL);
     }

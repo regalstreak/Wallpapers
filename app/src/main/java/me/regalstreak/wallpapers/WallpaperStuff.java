@@ -107,7 +107,7 @@ public class WallpaperStuff extends AppCompatActivity {
     }
 
     private void setCopyrightText() {
-        SpannableString ss = new SpannableString("All the wallpapers shown in the app are either in public domain or under Creative Commons license for which proper attribution is given to the respective uploaders. No wallpaper is distributed with our app. If an image violates any copyright, please report it to us and we will remove it from our database. For more information, click here.");
+        SpannableString ss = new SpannableString(getResources().getString(R.string.licence_text));
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View view) {
