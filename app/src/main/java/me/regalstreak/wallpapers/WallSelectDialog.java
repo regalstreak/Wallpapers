@@ -1,5 +1,6 @@
 package me.regalstreak.wallpapers;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -20,11 +21,13 @@ import java.io.IOException;
  * Created by regalstreak on 17/10/17.
  */
 
+@SuppressLint("ValidFragment")
 public class WallSelectDialog extends DialogFragment {
 
     Context context;
     Bitmap resource;
     View view;
+
 
     // **NIMP** TODO: 18/10/17 Use bundle instead of this constructor
     public WallSelectDialog(Context context, Bitmap resource, View view) {
@@ -32,6 +35,7 @@ public class WallSelectDialog extends DialogFragment {
         this.resource = resource;
         this.view = view;
     }
+
 
     private void setOurWall(int which, int sbMessage) {
 
