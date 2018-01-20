@@ -10,8 +10,6 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     // TODO: 17/10/17 offline retry and all
-    // TODO: 17/10/17 Entire code cleanup, strings, colors and shit
-    // TODO: 17/10/17 ALL TESTING
 
     private RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;

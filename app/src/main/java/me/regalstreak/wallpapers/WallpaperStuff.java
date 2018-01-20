@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -39,8 +40,6 @@ import java.io.OutputStream;
 
 public class WallpaperStuff extends AppCompatActivity {
 
-    // TODO: 17/10/17 Implement share feature
-
     protected static DataUrl sData;
     TextView copyright;
     TextView wallstufftitle;
@@ -57,6 +56,7 @@ public class WallpaperStuff extends AppCompatActivity {
     String fileplace;
     String fulldescPerm;
     final int writeStorageRequest = 0;
+    FloatingActionButton wallstuffshare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,7 @@ public class WallpaperStuff extends AppCompatActivity {
         downloadWall();
         setPreview();
         setWallButton();
+        setShareButton();
     }
 
     private void findStuff() {
@@ -80,6 +81,7 @@ public class WallpaperStuff extends AppCompatActivity {
         download = findViewById(R.id.download);
         preview = findViewById(R.id.preview);
         setwallpaper = findViewById(R.id.setwallpaper);
+        wallstuffshare = findViewById(R.id.wallstuffshare);
     }
 
     private void setData() {
@@ -308,6 +310,29 @@ public class WallpaperStuff extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    private void setShareButton() {
+
+        // **NIMP** TODO: 21/1/18 Host url shortner and branding: https://github.com/YOURLS/YOURLS
+        
+        final String shareText = getString(R.string.share_text) + " "
+                + getString(R.string.app_name) + " app by "
+                + getString(R.string.dev) + ": \n\n"
+                + sData.wallName + "\n"
+                + sData.wallURL;
+
+        wallstuffshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.setType("text/plain");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+                startActivity(Intent.createChooser(sendIntent, "Kaisa bheju bhsdk"));
+            }
+        });
+
     }
 
 }
