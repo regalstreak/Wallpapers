@@ -26,17 +26,6 @@
             android:name=".DisclaimerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".WallPreview"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_wall_preview"
-            android:parentActivityName=".WallpaperStuff"
-            android:screenOrientation="portrait"
-            android:theme="@style/WallPreviewTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="me.regalstreak.wallpapers.WallpaperStuff" />
-        </activity>
-        <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashTheme">
             <intent-filter>

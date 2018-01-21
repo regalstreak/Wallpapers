@@ -283,13 +283,14 @@ public class WallpaperStuff extends AppCompatActivity {
 
 
     private void setPreview() {
-        preview.setOnClickListener(new View.OnClickListener() {
+       /* preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WallpaperStuff.this, WallPreview.class);
                 startActivity(intent);
             }
         });
+       */
     }
 
     private void setWallButton() {
