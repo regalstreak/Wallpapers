@@ -30,6 +30,8 @@ import java.util.List;
 
 public class SplashScreen extends AppCompatActivity {
 
+    // TODO: 21/1/18 Change splashscreen
+
     public static final int CONNECTION_TIMEOUT = 10000;
     public static final int READ_TIMEOUT = 15000;
     protected static List<DataUrl> data = new ArrayList<>();

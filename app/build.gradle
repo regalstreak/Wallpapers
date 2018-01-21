@@ -37,4 +37,5 @@ dependencies {
     compile 'com.android.support:support-v4:26.+'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
+    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
 }

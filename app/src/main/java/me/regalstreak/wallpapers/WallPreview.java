@@ -9,9 +9,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
-import android.widget.ImageView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.github.chrisbanes.photoview.PhotoView;
 
 import static me.regalstreak.wallpapers.WallpaperStuff.sData;
 
@@ -21,8 +21,7 @@ import static me.regalstreak.wallpapers.WallpaperStuff.sData;
  */
 public class WallPreview extends AppCompatActivity {
 
-    // TODO: 17/10/17 Zooming into imageview
-    // TODO: 17/10/17 button colors 
+    // TODO: 17/10/17 button colors
     // TODO: 17/10/17 button function
     // TODO: 17/10/17 setwall lockscreen, device wallpaper
 
@@ -82,8 +81,7 @@ public class WallPreview extends AppCompatActivity {
         }
     };
 
-    // TODO: 11/10/17 Zoom and all 
-    private ImageView fullimage;
+    private PhotoView fullimage;
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
      * system UI. This is to prevent the jarring behavior of controls going away
