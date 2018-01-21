@@ -283,14 +283,13 @@ public class WallpaperStuff extends AppCompatActivity {
 
 
     private void setPreview() {
-       /* preview.setOnClickListener(new View.OnClickListener() {
+        preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WallpaperStuff.this, WallPreview.class);
                 startActivity(intent);
             }
         });
-       */
     }
 
     private void setWallButton() {
@@ -316,7 +315,7 @@ public class WallpaperStuff extends AppCompatActivity {
     private void setShareButton() {
 
         // **NIMP** TODO: 21/1/18 Host url shortner and branding: https://github.com/YOURLS/YOURLS
-        
+
         final String shareText = getString(R.string.share_text) + " "
                 + getString(R.string.app_name) + " app by "
                 + getString(R.string.dev) + ": \n\n"
