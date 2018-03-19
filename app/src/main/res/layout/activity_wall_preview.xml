@@ -3,8 +3,10 @@
     android:layout_height="match_parent">
 
     <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/fullimage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_email_white_24dp"/>
+        android:keepScreenOn="true"
+        android:src="@drawable/wall_stuff_button2" />
 
 </RelativeLayout>
