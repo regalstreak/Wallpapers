@@ -29,7 +29,7 @@ public class WallSelectDialog extends DialogFragment {
     View view;
 
 
-    // **NIMP** TODO: 18/10/17 Use bundle instead of this constructor
+    // N TODO: 18/10/17 Use bundle instead of this constructor
     public WallSelectDialog(Context context, Bitmap resource, View view) {
         this.context = context;
         this.resource = resource;

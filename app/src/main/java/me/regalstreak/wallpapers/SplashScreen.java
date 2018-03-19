@@ -44,22 +44,11 @@ public class SplashScreen extends AppCompatActivity {
         new AsyncFetch().execute();
     }
 
-    private boolean isNetworkAvailable(Context context) {
-        int[] networkTypes = {ConnectivityManager.TYPE_MOBILE,
-                ConnectivityManager.TYPE_WIFI};
-        try {
-            ConnectivityManager connectivityManager =
-                    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            for (int networkType : networkTypes) {
-                NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-                if (activeNetworkInfo != null &&
-                        activeNetworkInfo.getType() == networkType)
-                    return true;
-            }
-        } catch (Exception e) {
-            return false;
-        }
-        return false;
+    // Check for an active network
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     private void writeJsonToFile(String data, Context context) {
@@ -105,8 +94,9 @@ public class SplashScreen extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
 
-            if (isNetworkAvailable(SplashScreen.this)) {
+            if (isNetworkAvailable()) {
                 try {
+                    // URL Checks
                     url = new URL("https://api.myjson.com/bins/11vt6x");
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -114,6 +104,7 @@ public class SplashScreen extends AppCompatActivity {
                 }
 
                 try {
+                    // Start connection
                     connection = (HttpURLConnection) url.openConnection();
                     connection.setReadTimeout(READ_TIMEOUT);
                     connection.setConnectTimeout(CONNECTION_TIMEOUT);
@@ -151,7 +142,6 @@ public class SplashScreen extends AppCompatActivity {
                 File ourData = new File(SplashScreen.this.getFilesDir().getPath() + ourDataFilename);
                 try {
                     return buffToString(new FileReader(ourData), false);
-
                 } catch (IOException e) {
                     e.printStackTrace();
                     return e.toString();
@@ -162,6 +152,7 @@ public class SplashScreen extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             try {
+
                 JSONArray jsonArray = new JSONArray(result);
 
                 // Extract data from json and store into ArrayList as class objects

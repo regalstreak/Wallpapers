@@ -16,7 +16,7 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    // **NIMP** TODO: 17/10/17 Dynamic colors for stuff
+    // N TODO: 17/10/17 Dynamic colors for stuff
 
     private Context context;
     private LayoutInflater inflater;
