@@ -7,7 +7,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.github.chrisbanes.photoview.PhotoView;
+
+import static me.regalstreak.wallpapers.WallpaperStuff.sData;
+
 public class WallPreview extends AppCompatActivity {
+
+    PhotoView fullImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +22,18 @@ public class WallPreview extends AppCompatActivity {
         hideActionBar();
         setContentView(R.layout.activity_wall_preview);
         fullScreen();
+
+        fullImage = findViewById(R.id.fullimage);
+
+        // Load images
+        // TODO: 2/10/17 Loading stuff remove mipmap
+        // TODO: 2/10/17 Loading percentage
+        GlideApp.with(this)
+                .load(sData.wallURL)
+                .error(R.mipmap.ic_launcher_round)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.mipmap.ic_launcher)
+                .into(fullImage);
     }
 
     public void hideActionBar() {

@@ -1,12 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#000000">
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/fullimage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:keepScreenOn="true"
-        android:src="@drawable/wall_stuff_button2" />
+        android:background="#000000" />
 
 </RelativeLayout>
