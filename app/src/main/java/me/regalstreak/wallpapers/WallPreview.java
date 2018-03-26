@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.chrisbanes.photoview.PhotoView;
@@ -15,6 +16,7 @@ import static me.regalstreak.wallpapers.WallpaperStuff.sData;
 public class WallPreview extends AppCompatActivity {
 
     PhotoView fullImage;
+    Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,7 @@ public class WallPreview extends AppCompatActivity {
         hideActionBar();
         setContentView(R.layout.activity_wall_preview);
         fullScreen();
+        setBackButton();
 
         fullImage = findViewById(R.id.fullimage);
 
@@ -36,12 +39,12 @@ public class WallPreview extends AppCompatActivity {
                 .into(fullImage);
     }
 
-    public void hideActionBar() {
+    void hideActionBar() {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         getSupportActionBar().hide();
     }
 
-    public void fullScreen() {
+    void fullScreen() {
 
         // BEGIN_INCLUDE (get_current_ui_flags)
         int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
@@ -72,5 +75,15 @@ public class WallPreview extends AppCompatActivity {
         }
 
         getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
+    }
+
+    void setBackButton() {
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }

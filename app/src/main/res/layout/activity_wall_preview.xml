@@ -7,7 +7,21 @@
         android:id="@+id/fullimage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:keepScreenOn="true"
-        android:background="#000000" />
+        android:background="#000000"
+        android:keepScreenOn="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:alpha="0.7"
+            android:background="@drawable/ic_arrow_back_white_24dp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

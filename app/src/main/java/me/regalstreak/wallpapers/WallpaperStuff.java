@@ -32,8 +32,6 @@ import android.widget.Toast;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.hannesdorfmann.swipeback.Position;
-import com.hannesdorfmann.swipeback.SwipeBack;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -63,12 +61,7 @@ public class WallpaperStuff extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SwipeBack.attach(this, Position.LEFT)
-                .setContentView(R.layout.activity_wallpaper_stuff)
-                .setSwipeBackView(R.layout.swipeback_default);
-
-        //setContentView(R.layout.activity_wallpaper_stuff);
+        setContentView(R.layout.activity_wallpaper_stuff);
         findStuff();
         setCopyrightText();
         setData();
@@ -76,13 +69,6 @@ public class WallpaperStuff extends AppCompatActivity {
         setPreview();
         setWallButton();
         setShareButton();
-    }
-
-    @Override
-    public void onBackPressed(){
-        super.onBackPressed();
-        overridePendingTransition(R.anim.swipeback_stack_to_front,
-                R.anim.swipeback_stack_right_out);
     }
 
     private void findStuff() {
