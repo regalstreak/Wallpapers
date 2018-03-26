@@ -97,7 +97,7 @@ public class SplashScreen extends AppCompatActivity {
             if (isNetworkAvailable()) {
                 try {
                     // URL Checks
-                    url = new URL("https://api.myjson.com/bins/11vt6x");
+                    url = new URL("https://api.myjson.com/bins/14nlvv");
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                     return e.toString();
